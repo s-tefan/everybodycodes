@@ -54,3 +54,38 @@ print(number)
 '''
 Fortsättning följer
 '''
+scales = read_input('everybody_codes_e2024_q02_p3.txt')
+#scales = read_input('test_e2024_q02_p3.txt')
+
+words = scales[0].split(':', 1)[1].split(',')
+text = scales[2:]
+
+number = 0
+s = set()
+for lineno, line in enumerate(text):
+
+    for word in words:
+        augline = line + line[:len(word)-1]
+        for w in (word, word[::-1]):
+            start = 0
+            while True:
+                n = augline.find(w, start)
+                if n < 0:
+                    break
+                else:
+                    s.update(set((lineno, m % len(line)) for m in range(n, n+len(w))))
+                    start = n + 1
+for k in range(len(text[0])):
+    for word in words:
+        augline = ''.join(line[k] for line in text)
+        for w in (word, word[::-1]):
+            start = 0
+            while True:
+                n = augline.find(w, start)
+                if n < 0:
+                    break
+                else:
+                    s.update(set((r, k) for r in range(n, n + len(w)) ))
+                    start = n + 1
+print(len(s))
+#print(s)
